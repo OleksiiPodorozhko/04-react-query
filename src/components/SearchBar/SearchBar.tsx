@@ -3,19 +3,19 @@ import { toast } from 'react-hot-toast';
 
 
 interface SearchBarProps {
-  onSubmit: (query: string) => Promise<void>;
+  onSubmit: (query: string) => void;
 }
 
 export default function SearchBar({ onSubmit }: SearchBarProps) {
   const handleSubmit = async (formData: FormData) => {
-    const query = (formData.get('query') ?? "").toString().trim();
+    const search = (formData.get('query') ?? "").toString().trim();
 
-    if (!query) {
+    if (!search) {
       toast.error('Please enter your search query.');
       return;
     }
 
-    await onSubmit(query);
+    onSubmit(search);
   }
 
   return (
