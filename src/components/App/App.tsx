@@ -7,7 +7,7 @@ import MovieGrid from '../MovieGrid/MovieGrid.tsx';
 import Loader from '../Loader/Loader.tsx';
 import ErrorMessage from '../ErrorMessage/ErrorMessage.tsx';
 import MovieModal from '../MovieModal/MovieModal.tsx';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import css from './App.module.css';
 import ReactPaginate from 'react-paginate';
 
@@ -29,6 +29,7 @@ export default function App() {
     queryKey: ['movies', search, currentPage],
     queryFn: () => getMovies(search, currentPage),
     enabled: !!search.trim(),
+    placeholderData: keepPreviousData,
   });
 
   const movies = data?.results ?? [];
