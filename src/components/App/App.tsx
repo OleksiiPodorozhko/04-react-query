@@ -11,6 +11,10 @@ import { useQuery } from '@tanstack/react-query';
 import css from './App.module.css';
 import ReactPaginate from 'react-paginate';
 
+const Paginate = (typeof (ReactPaginate as any) === 'object' && (ReactPaginate as any).default) 
+  ? (ReactPaginate as any).default 
+  : ReactPaginate;
+
 export default function App() {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [search, setSearch] = useState('');
@@ -48,11 +52,11 @@ export default function App() {
       </div>
       <SearchBar onSubmit={handleSearch} />
       {isSuccess && totalPages > 1 && (
-        <ReactPaginate
+        <Paginate
           pageCount={totalPages}
           pageRangeDisplayed={5}
           marginPagesDisplayed={1}
-          onPageChange={({ selected }) => setCurrentPage(selected + 1)}
+          onPageChange={({ selected }: { selected: number }) => setCurrentPage(selected + 1)}
           forcePage={currentPage - 1}
           containerClassName={css.pagination}
           activeClassName={css.active}
